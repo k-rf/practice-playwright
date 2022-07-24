@@ -1,8 +1,9 @@
 {
-  "name": "template_web_app_root",
-  "remoteUser": "template_web_app_root",
+  "name": "practice_playwright_root",
+  "remoteUser": "pwuser",
   "dockerComposeFile": "../docker-compose.dev.yaml",
   "service": "root",
+  "postCreateCommand": "yarn install && yarn playwright install",
   "postAttachCommand": "yarn install",
   "workspaceFolder": "/workspaces",
   "overrideCommand": true,

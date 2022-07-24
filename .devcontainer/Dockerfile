@@ -7,6 +7,8 @@ ARG REMOTE_HOME
 ENV PATH=$PATH:${REMOTE_HOME}/.yarn/bin
 
 RUN userdel -r node && useradd -m ${REMOTE_USER} -u 1000 -s /bin/bash
+RUN apt-get update && apt-get install -y sudo bash-completion less nano wget curl
+RUN usermod -aG sudo ${REMOTE_USER} && echo '%sudo ALL=(ALL:ALL) NOPASSWD: ALL' | tee -a /etc/sudoers
 
 RUN SNIPPET="export PROMPT_COMMAND='history -a' && export HISTFILE=/commandhistory/.bash_history" \
     && mkdir -p /commandhistory ${REMOTE_HOME}/.vscode-server/extensions ${REMOTE_WORKSPACES}/node_modules \
@@ -33,3 +35,4 @@ RUN mkdir -p ${REMOTE_HOME}/.config \
     } >> ${REMOTE_HOME}/.config/starship.toml
 
 RUN yarn global add zx
+RUN npx playwright install-deps

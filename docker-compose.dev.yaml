@@ -9,6 +9,8 @@ services:
         - REMOTE_USER=${ROOT_REMOTE_USER}
         - REMOTE_WORKSPACES=${ROOT_REMOTE_WORKSPACES}
         - REMOTE_HOME=${ROOT_REMOTE_HOME}
+    environment:
+      - DISPLAY=:0
     container_name: ${ROOT_CONTAINER_NAME}
     working_dir: ${ROOT_REMOTE_WORKSPACES}
     user: ${ROOT_REMOTE_USER}
@@ -16,6 +18,9 @@ services:
     dns:
       - 8.8.8.8
     volumes:
+      - type: bind
+        source: /tmp/.X11-unix
+        target: /tmp/.X11-unix
       - type: bind
         source: .
         target: ${PROJECT_ROOT}
@@ -47,6 +52,8 @@ services:
     working_dir: ${FRONTEND_REMOTE_WORKSPACES}
     user: ${FRONTEND_REMOTE_USER}
     tty: true
+    expose:
+      - 8080
     dns:
       - 8.8.8.8
     volumes:
